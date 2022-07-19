@@ -4,8 +4,6 @@
 //
 //  Created by Joe on 18/06/2022.
 //
-#define GL_SILENCE_DEPRECATION
-
 #include <iostream>
 #include <GL/glew.h>//this needs to be included before any other gl header
 #include <GLFW/glfw3.h>
