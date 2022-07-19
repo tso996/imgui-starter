@@ -2,4 +2,5 @@
 # add_library(bbstock bbstock.cpp)
 # add_library(adapter adapter.cpp)
 # add_library(basestock base.cpp)
-include_directories(GL GLFW)
+# the following is not required
+# include_directories(GL GLFW)

@@ -5,6 +5,10 @@
 //  Created by Joe on 18/06/2022.
 //
 #include <iostream>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <GL/glew.h>//this needs to be included before any other gl header
 #include <GLFW/glfw3.h>
 
@@ -138,6 +142,17 @@ int main(int argc, const char * argv[]) {
         "}\n";
     unsigned int shader = Load( vertexShader.c_str(), GL_VERTEX_SHADER, fragmentShader.c_str(), GL_FRAGMENT_SHADER, NULL );
     glUseProgram( shader );
+    //imgui code
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window,true);
+    ImGui_ImplOpenGL3_Init("#version 410");
+
+    //========
+
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
