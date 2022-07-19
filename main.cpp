@@ -131,19 +131,20 @@ int main(int argc, const char * argv[]) {
 
     std::string vertexShader =
         "#version 410 core\n"
-        "layout(location = 0) in vec4 position;\n"
+        "layout(location = 0) in vec4 aPos;\n"
+        "uniform float size;\n"
         "void main(){\n"
-        "   gl_Position = position;\n"
+        "   gl_Position = vec4(aPos.x*size, aPos.y*size, aPos.z*size, 1.0);\n"
         "}\n";
 
     std::string fragmentShader =
         "#version 410 core\n"
-        "layout(location = 0) out vec4 color;\n"
+        "out vec4 shadeOut;\n"
+        "uniform vec4 color;\n"
         "void main(){\n"
-        "   color = vec4(1.0, 0.0, 0.0, 1.0);\n"
+        "   shadeOut = color;\n"
         "}\n";
     unsigned int shader = Load( vertexShader.c_str(), GL_VERTEX_SHADER, fragmentShader.c_str(), GL_FRAGMENT_SHADER, NULL );
-    glUseProgram( shader );
     //imgui code
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -153,6 +154,12 @@ int main(int argc, const char * argv[]) {
     ImGui_ImplOpenGL3_Init("#version 410");
     //========
 
+    bool drawTriangle = false;
+    float size = 1.0f;
+    float color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    glUseProgram(shader);
+    glUniform1f(glGetUniformLocation(shader, "size"),size);
+    glUniform4f(glGetUniformLocation(shader, "color"), color[0],color[1],color[2], color[3]);
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -173,13 +180,22 @@ int main(int argc, const char * argv[]) {
 //        glVertex2f(0.5f, -0.5f);
 //
 //        glEnd();
-        
-        glDrawArrays(GL_TRIANGLES, 0, 3);//drawcall. 0 is the starting index of array, 3 is number of vertices to render..
-        
+        if(drawTriangle){
+            glDrawArrays(GL_TRIANGLES, 0, 3);//drawcall. 0 is the starting index of array, 3 is number of vertices to render..
+        }
         //imgui function
         ImGui::Begin("First imgui window");
         ImGui::Text("Hello World!!!!!");
+        ImGui::Checkbox("Triangle", &drawTriangle);
+        ImGui::SliderFloat("Size",&size, 0.5f, 2.0f);
+        ImGui::ColorEdit4("Color", color);
         ImGui::End();
+        
+        glUseProgram(shader);
+        glUniform1f(glGetUniformLocation(shader, "size"),size);
+        glUniform4f(glGetUniformLocation(shader, "color"), color[0],color[1],color[2], color[3]);
+
+
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -196,6 +212,7 @@ int main(int argc, const char * argv[]) {
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
+    std::cout<<"Quitting.."<<std::endl;
     glfwTerminate();
     return 0;
 }
