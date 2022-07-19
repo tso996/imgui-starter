@@ -1,1 +1,2 @@
-#basic imgui window on opengl and glfw
+Basic imgui application  
+<img src="video.gif">

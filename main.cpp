@@ -8,8 +8,9 @@
 #include <GL/glew.h>//this needs to be included before any other gl header
 #include <GLFW/glfw3.h>
 
+namespace shaderFunctions{
 
- static void CheckStatus( GLuint obj )
+    static void CheckStatus( GLuint obj )
     {
         GLint status = GL_FALSE;
         if( glIsShader(obj) ) glGetShaderiv( obj, GL_COMPILE_STATUS, &status );
@@ -48,7 +49,7 @@
         CheckStatus( prog );
         return prog;
     }
-
+}
 
 int main(int argc, const char * argv[]) {
     
@@ -76,7 +77,7 @@ int main(int argc, const char * argv[]) {
     //===============================================================
 
 
-    GLFWwindow* window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 960, "Shapes", NULL, NULL);
     
     if (!window)
     {
@@ -134,7 +135,7 @@ int main(int argc, const char * argv[]) {
         "void main(){\n"
         "   shadeOut = color;\n"
         "}\n";
-    unsigned int shader = Load( vertexShader.c_str(), GL_VERTEX_SHADER, fragmentShader.c_str(), GL_FRAGMENT_SHADER, NULL );
+    unsigned int shader = shaderFunctions::Load( vertexShader.c_str(), GL_VERTEX_SHADER, fragmentShader.c_str(), GL_FRAGMENT_SHADER, NULL );
     //imgui code
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -168,20 +169,13 @@ int main(int argc, const char * argv[]) {
         }else{
             //mouse on gui
         }
-        //leagcy OpenGL way
-//        glBegin(GL_TRIANGLES);
-//
-//        glVertex2f(-0.5f, -0.5f);
-//        glVertex2f(0.0f,0.5f);
-//        glVertex2f(0.5f, -0.5f);
-//
-//        glEnd();
+  
         if(drawTriangle){
             glDrawArrays(GL_TRIANGLES, 0, 3);//drawcall. 0 is the starting index of array, 3 is number of vertices to render..
         }
         //imgui function
-        ImGui::Begin("First imgui window");
-        ImGui::Text("Hello World!!!!!");
+        ImGui::Begin("Console");
+        ImGui::Text("Select a shape");
         ImGui::Checkbox("Triangle", &drawTriangle);
         ImGui::SliderFloat("Size",&size, 0.5f, 2.0f);
         ImGui::ColorEdit4("Color", color);
