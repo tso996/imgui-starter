@@ -1,7 +1,3 @@
-//
-//  main.cpp
-//  OpenGLExperiments
-//
 //  Created by Joe on 18/06/2022.
 //
 #include <iostream>
@@ -11,8 +7,6 @@
 
 #include <GL/glew.h>//this needs to be included before any other gl header
 #include <GLFW/glfw3.h>
-
-
 
 
  static void CheckStatus( GLuint obj )
@@ -54,10 +48,6 @@
         CheckStatus( prog );
         return prog;
     }
-
-
-
-
 
 
 int main(int argc, const char * argv[]) {
@@ -172,6 +162,12 @@ int main(int argc, const char * argv[]) {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        if(!io.WantCaptureMouse){
+            //mouse not on gui
+            
+        }else{
+            //mouse on gui
+        }
         //leagcy OpenGL way
 //        glBegin(GL_TRIANGLES);
 //
