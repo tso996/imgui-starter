@@ -62,6 +62,8 @@
 
 int main(int argc, const char * argv[]) {
     
+    std::cout<<"STARTING PROGRAM"<<std::endl;
+
     #ifdef DEBUG
         std::cout<<"debug build"<<std::endl;
     #else
