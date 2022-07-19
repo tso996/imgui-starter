@@ -16,7 +16,7 @@ include_directories(include imgui)#this includes the subdirectories in it
 
 add_subdirectory(imgui)#this is to find the cmakelists file in the subdirectory and build library
 
-target_link_libraries(${PROJECT_NAME} imgui_lib "-framework OpenGL" libGLEW.2.2.0.dylib libglfw.3.3.dylib)
+target_link_libraries(${PROJECT_NAME} imgui_lib "-framework OpenGL" libGLEW.2.2.0.dylib libglfw.3.3.dylib)#this links the found libraries and compiled ones with the executable
 
 #this does not work sometimes
 # target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)

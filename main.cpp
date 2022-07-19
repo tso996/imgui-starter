@@ -149,7 +149,6 @@ int main(int argc, const char * argv[]) {
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window,true);
     ImGui_ImplOpenGL3_Init("#version 410");
-
     //========
 
 
@@ -158,6 +157,11 @@ int main(int argc, const char * argv[]) {
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+
+        //imgui initialization
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
         //leagcy OpenGL way
 //        glBegin(GL_TRIANGLES);
@@ -170,13 +174,25 @@ int main(int argc, const char * argv[]) {
         
         glDrawArrays(GL_TRIANGLES, 0, 3);//drawcall. 0 is the starting index of array, 3 is number of vertices to render..
         
-        
+        //imgui function
+        ImGui::Begin("First imgui window");
+        ImGui::Text("Hello World!!!!!");
+        ImGui::End();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
         /* Poll for and process events */
         glfwPollEvents();
     }
+    
+    //imgui wind up
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwTerminate();
     return 0;
